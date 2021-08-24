@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Repopeople</title>
+    <style>
+        body{
+            width: 100%;
+        }
+        h1{
+            margin-left: 20%;
+        }
+        #grab{
+            margin-left: 20%;
+        }
+        .img
+        {
+            margin-left: 20%;
+            width: 17%;
+            height: 200px;
+            margin-right: 0;
+            margin-bottom: 10px;
+            background-color: silver;
+            overflow: hidden;
+            float: left;
+        }
+        .info
+        {
+            margin-right: 30%;
+            margin-left: 0;
+            margin-bottom: 10px;
+            padding-top: 40px;
+            float: right;
+            width: 33%;
+            height: 160px;
+            background-color: silver;
+        }
+        #button{
+            position: center;
+        }
+    </style>
+</head>
+<body>
+    <button id="grab">Load Github Users</button><br><br><br>
+    <h1>Github Users</h1>
+    <section id="show"></section>
+
+    <script>
+        document.getElementById('grab').addEventListener('click', loadm);
+
+        function loadm()
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://api.github.com/users');
+            xhr.onload = function()
+            {
+                if(xhr.status == 200)
+                {
+
+                        var people = JSON.parse(xhr.responseText);
+                        var output= ' ';
+                        for(var i in people){
+                        output +=
+                        '<div class="img">'+
+                            '<img src="'+people[i].avatar_url+'" width="200px" height="200px">'+
+                        '</div>'+
+
+                        '<div class="info">'+
+                            '<ul>' +
+                            '<li> ID: '+ people[i].id + '</li>' +
+                            '<li> Login: '+ people[i].login + '</li>' +
+                            '<li> Repos: '+ people[i].repos_url + '</li>' +
+                            
+                            '</ul>'+
+                        '</div>';
+}
+
+
+                        document.getElementById('show').innerHTML = output;
+                       
+
+                }
+            }
+            xhr.send();
+        }
+    </script>
+    <div>
+
+    </div>
+    
+</body>
+</html>
